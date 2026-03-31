@@ -24,7 +24,7 @@ def add_matrices2D(mat1, mat2):
         list of list: A new matrix containing the element-wise sums.
         None: If the input matrices do not have the same shape.
     """
-    if matrix_shape(mat1) != matrix_shape(mat2) or not mat1:
+    if not mat1 or matrix_shape(mat1) != matrix_shape(mat2):
         return None
 
     new_mat = []
