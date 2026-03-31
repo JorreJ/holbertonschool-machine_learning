@@ -17,7 +17,8 @@ def matrix_shape(matrix):
     the first element, until it reaches a non-list element.
     """
     shape = []  # Initialize an empty list to store the dimensions
-    while isinstance(matrix, list):
-        shape.append(len(matrix))  # Append the length of the current level
-        matrix = matrix[0]        # Move to the next nested level
+    if matrix and matrix[0] :
+        while isinstance(matrix, list):
+            shape.append(len(matrix))  # Append the length of the current level
+            matrix = matrix[0]        # Move to the next nested level
     return shape  # Return the list of dimensions
