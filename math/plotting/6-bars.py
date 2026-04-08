@@ -31,7 +31,7 @@ def bars():
     plt.ylim(0, 80)
     plt.bar(x, apple, color='r', width=0.5)
     plt.bar(x, banana, bottom=apple, color='yellow', width=0.5)
-    plt.bar(x, orange, bottom=apple+banana, color='orange', width=0.5)
+    plt.bar(x, orange, bottom=apple+banana, color='#ff8000', width=0.5)
     plt.bar(x, peach, bottom=apple+banana+orange, color='#ffe5b4', width=0.5)
 
     plt.ylabel('Quantity of Fruit')
