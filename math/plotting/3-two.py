@@ -16,7 +16,7 @@ def two():
     plt.xlim(0, 20000)
     plt.ylim(0, 1)
     plt.xlabel('Time (years)')
-    plt.ylabel('Fraction remaining')
+    plt.ylabel('Fraction Remaining')
     plt.title('Exponential Decay of Radioactive Elements')
     plt.legend()
     plt.show()
