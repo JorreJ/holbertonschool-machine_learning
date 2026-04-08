@@ -28,6 +28,7 @@ def all_in_one():
     plt.subplot(3, 2, 1)
     plt.plot(y0, 'r-')
     plt.xlim(0, 10)
+    plt.yticks(range(0, 1001, 500))
 
     mean = [69, 0]
     cov = [[15, 8], [8, 15]]
@@ -49,7 +50,7 @@ def all_in_one():
     plt.yscale('log')
     plt.xlim(0, 28650)
     plt.xlabel('Time (years)')
-    plt.ylabel('Fraction remaining')
+    plt.ylabel('Fraction Remaining')
     plt.title('Exponential Decay of C-14')
 
     x3 = np.arange(0, 21000, 1000)
@@ -64,7 +65,7 @@ def all_in_one():
     plt.xlim(0, 20000)
     plt.ylim(0, 1)
     plt.xlabel('Time (years)')
-    plt.ylabel('Fraction remaining')
+    plt.ylabel('Fraction Remaining')
     plt.title('Exponential Decay of Radioactive Elements')
     plt.legend()
 
@@ -73,6 +74,8 @@ def all_in_one():
     plt.subplot(3, 1, 3)
     plt.xlim(0, 100)
     plt.ylim(0, 30)
+    plt.xticks(range(0, 101, 10))
+    plt.yticks(range(0, 31, 10))
     plt.hist(student_grades, bins=range(0, 101, 10), edgecolor='black')
     plt.xlabel('Grades')
     plt.ylabel('Number of Students')
