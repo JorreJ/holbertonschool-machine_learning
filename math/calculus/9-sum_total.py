@@ -1,25 +1,23 @@
 #!/usr/bin/env python3
 
-"""This module computes the summation of squares of integers from 1 to n."""
+"""Computes the summation of squares of integers from 1 to n."""
 
 
 def summation_i_squared(n):
     """
-    Recursively compute the sum of the squares of integers from 1 to n.
+    Compute the sum of the squares of integers from 1 to n.
 
-    The function calculates:
-        1^2 + 2^2 + 3^2 + ... + n^2
+    This function uses the formula:
+        n(n + 1)(2n + 1) / 6
 
     Args:
-        n (int): The upper bound of the summation.
+        n (int): The upper bound of the summation. Must be a positive integer.
 
     Returns:
         int: The sum of squares from 1 to n.
-        None: If n is less than 1.
+        None: If n is not a positive integer.
     """
-    if n > 1:
-        return (n**2) + summation_i_squared(n - 1)
-    elif n == 1:
-        return 1
-    else:
+    if not isinstance(n, int) or not n > 0:
         return None
+
+    return (n * (n + 1) * (2 * n + 1)) // 6
