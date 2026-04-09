@@ -24,5 +24,8 @@ def poly_derivative(poly):
     new_list = []
     for x in range(1, len(poly)):
         new_list.append(poly[x] * x)
+    
+    if new_list == []:
+        new_list = [0]
 
     return new_list
