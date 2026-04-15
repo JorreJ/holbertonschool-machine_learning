@@ -82,11 +82,9 @@ class Node:
             str: The formatted string with tree-like branches.
         """
         lines = text.split("\n")
-        new_text = "    +--" + lines[0] + "\n"
+        new_text = "    +--" + lines[0]
         for x in lines[1:]:
-            new_text += ("       " + x)
-            if x != lines[-1]:
-                new_text += "\n"
+            new_text += ("\n       " + x)
         return new_text
 
     def __str__(self):
@@ -204,4 +202,4 @@ class Decision_Tree():
         Returns:
             str: Visual representation of the full tree.
         """
-        return self.root.__str__()
+        return self.root.__str__() + "\n"
