@@ -354,7 +354,7 @@ class Decision_Tree():
 - Number of nodes           : { self.count_nodes() }
 - Number of leaves          : { self.count_nodes(only_leaves=True) }
 - Accuracy on training data : { self.accuracy(
-    self.explanatory,self.target)    }""")
+    self.explanatory,self.target)    }""")     # <--- to be defined later
 
     def np_extrema(self, arr):
         """Calculate min and max of an array.
