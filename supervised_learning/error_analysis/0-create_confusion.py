@@ -22,4 +22,5 @@ def create_confusion_matrix(labels, logits):
     real_index = np.argmax(labels, axis=1)
     predicted_index = np.argmax(logits, axis=1)
     combined_index = real_index * n + predicted_index
-    return np.bincount(combined_index, minlength=n**2).reshape(n, n)
+    conf_matrix = np.bincount(combined_index, minlength=n**2).reshape(n, n)
+    return conf_matrix.astype(float)
