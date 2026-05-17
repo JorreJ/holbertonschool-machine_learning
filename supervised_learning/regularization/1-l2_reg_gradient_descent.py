@@ -17,21 +17,23 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
         L (int): The number of layers in the neural network.
     """
     m = Y.shape[1]
-    last_layer = cache["A" + str(L)]
-    dZ_L = last_layer - Y
-    previous_layer = cache["A" + str(L - 1)]
-    dW_L = np.dot(dZ_L, previous_layer.T) / m
-    db_L = np.sum(dZ_L, axis=1, keepdims=True) / m
-    next_dZ = dZ_L
-    weights["b" + str(L)] -= alpha * db_L
-    weights["W" + str(L)] = weights["W" + str(L)] * (1 - (alpha * lambtha) / m) - (alpha * dW_L)
+    weights_copy = weights.copy()
+    A_L = cache["A" + str(L)]
+    dZ = A_L - Y
+    A_prev = cache["A" + str(L - 1)]
+    dW = np.dot(dZ, A_prev.T) / m
+    db = np.sum(dZ, axis=1, keepdims=True) / m
+    weights["b" + str(L)] -= alpha * db
+    weights["W" + str(L)] -= alpha * (dW + (lambtha / m) *
+                                      weights_copy["W" + str(L)])
+
     for x in range(L - 1, 0, -1):
-        next_W = weights["W" + str(x + 1)]
-        current_A = cache["A" + str(x)]
-        dZ_x = np.dot(next_W.T, next_dZ) * (1 - np.square(current_A))
-        previous_layer = cache["A" + str(x - 1)]
-        dW_x = np.dot(dZ_x, previous_layer.T) / m
-        db_x = np.sum(dZ_x, axis=1, keepdims=True) / m
-        next_dZ = dZ_x
-        weights["b" + str(x)] -= alpha * db_x
-        weights["W" + str(x)] = weights["W" + str(x)] * (1 - (alpha * lambtha) / m) - (alpha * dW_x)
+        A_current = cache["A" + str(x)]
+        W_next = weights_copy["W" + str(x + 1)]
+        dZ = np.dot(W_next.T, dZ) * (1 - A_current ** 2)
+        A_prev = cache["A" + str(x - 1)]
+        dW = np.dot(dZ, A_prev.T) / m
+        db = np.sum(dZ, axis=1, keepdims=True) / m
+        weights["b" + str(x)] -= alpha * db
+        weights["W" + str(x)] -= alpha * (dW + (lambtha / m) *
+                                          weights_copy["W" + str(x)])
