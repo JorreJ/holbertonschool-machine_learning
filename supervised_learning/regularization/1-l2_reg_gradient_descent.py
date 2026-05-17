@@ -16,7 +16,7 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
         lambtha (float): The L2 regularization parameter.
         L (int): The number of layers in the neural network.
     """
-    m = len(Y[0])
+    m = Y.shape[1]
     last_layer = cache["A" + str(L)]
     dZ_L = last_layer - Y
     previous_layer = cache["A" + str(L - 1)]
@@ -35,5 +35,5 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
         db_x = (1 / m) * np.sum(dZ_x, axis=1, keepdims=True)
         next_dZ = dZ_x
         weights["b" + str(x)] -= alpha * db_x
-        weights["W" + str(x)] -= alpha * (dW_x + (lambtha / m
-                                                  * weights["W" + str(x)]))
+        weights["W" + str(x)] -= alpha * (dW_x + (lambtha / m)
+                                                  * weights["W" + str(x)])
