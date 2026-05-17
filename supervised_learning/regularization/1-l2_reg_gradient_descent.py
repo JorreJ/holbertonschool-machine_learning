@@ -17,7 +17,7 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
         L (int): The number of layers in the neural network.
     """
     m = Y.shape[1]
-    weights_copy = weights.copy()
+    weights_copy = {key: np.copy(val) for key, val in weights.items()}
     A_L = cache["A" + str(L)]
     dZ = A_L - Y
     A_prev = cache["A" + str(L - 1)]
