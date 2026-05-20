@@ -21,9 +21,11 @@ def convolve_grayscale_same(images, kernel):
         numpy.ndarray: An array containing the convolved images of shape
             (m, h, w).
     """
-    images_pad = np.pad(images, ((0,), (1,), (1,)))
-    m, h, w = images_pad.shape
     kh, kw = kernel.shape
+    ph, pw = kh // 2, kw // 2
+    images_pad = np.pad(images, ((0,), (ph,), (pw,)))
+    m, h, w = images_pad.shape
+    
 
     h_pos = h - kh + 1
     w_pos = w - kw + 1
