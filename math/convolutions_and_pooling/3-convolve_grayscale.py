@@ -8,10 +8,11 @@ def convolve_grayscale(images, kernel, padding='same', stride=(1, 1)):
     """Perform a convolution on grayscale images.
 
     Args:
-        images (numpy.ndarray): Array of shape (m, h, w) containing the images.
+        images (numpy.ndarray): Array of shape (m, h_orig, w_orig) containing
+            the images.
             m is the number of images.
-            h is the height in pixels of the images.
-            w is the width in pixels of the images.
+            h_orig is the original height in pixels of the images.
+            w_orig is the original width in pixels of the images.
         kernel (numpy.ndarray): Array of shape (kh, kw) containing the kernel
             for the convolution.
             kh is the height of the kernel.
@@ -26,28 +27,34 @@ def convolve_grayscale(images, kernel, padding='same', stride=(1, 1)):
     """
     kh, kw = kernel.shape
     sh, sw = stride
+
+    m, h_orig, w_orig = images.shape
+
     if padding == 'same':
-        m, h, w = images.shape
-        h_out = int(np.ceil(h / sh))
-        w_out = int(np.ceil(w / sw))
-        ph = max(0, (h_out - 1) * sh + kh - h)
-        pw = max(0, (w_out - 1) * sw + kw - w)
+        h_pos = int(np.ceil(h_orig / sh))
+        w_pos = int(np.ceil(w_orig / sw))
+
+        ph = max(0, (h_pos - 1) * sh + kh - h_orig)
+        pw = max(0, (w_pos - 1) * sw + kw - w_orig)
+
         bph, bpw = ph // 2, pw // 2
         aph, apw = ph - bph, pw - bpw
         pad = ((0, 0), (bph, aph), (bpw, apw))
+
     elif padding == 'valid':
         pad = 0
+        h_pos = (h_orig - kh) // sh + 1
+        w_pos = (w_orig - kw) // sw + 1
+
     elif isinstance(padding, tuple):
         pad = ((0,), (padding[0],), (padding[1],))
+        h_pos = (h_orig + 2 * padding[0] - kh) // sh + 1
+        w_pos = (w_orig + 2 * padding[1] - kw) // sw + 1
 
     images_pad = np.pad(images, pad)
-    m, h, w = images_pad.shape
-
-    h_pos = (h - kh) // sh + 1
-    w_pos = (w - kw) // sw + 1
-    total_pos = h_pos * w_pos
 
     new_mat = np.zeros((m, h_pos, w_pos))
+    total_pos = h_pos * w_pos
 
     for index in range(total_pos):
         i = index // w_pos
@@ -55,4 +62,5 @@ def convolve_grayscale(images, kernel, padding='same', stride=(1, 1)):
         part_mat = images_pad[:, i * sh: (i * sh) + kh, j * sw: (j * sw) + kw]
 
         new_mat[:, i, j] = np.sum(part_mat * kernel, axis=(1, 2))
+
     return new_mat
