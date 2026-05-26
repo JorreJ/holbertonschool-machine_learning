@@ -42,7 +42,7 @@ def convolve_grayscale(images, kernel, padding='same', stride=(1, 1)):
         pad = ((0, 0), (bph, aph), (bpw, apw))
 
     elif padding == 'valid':
-        pad = 0
+        pad = ((0,), (0,), (0,))
         h_pos = int(np.ceil((h_orig - kh + 1) / sh))
         w_pos = int(np.ceil((w_orig - kw + 1) / sw))
 
