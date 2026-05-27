@@ -70,13 +70,6 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
             dA_prev_padded[:, i * sh: (i * sh) + kh, j * sw:
                            (j * sw) + kw, :] += dZ_pixel * W[:, :, :, k]
 
-    if ph > 0 and pw > 0:
-        dA_prev = dA_prev_padded[:, ph:-ph, pw:-pw, :]
-    elif ph > 0:
-        dA_prev = dA_prev_padded[:, ph:-ph, :, :]
-    elif pw > 0:
-        dA_prev = dA_prev_padded[:, :, pw:-pw, :]
-    else:
-        dA_prev = dA_prev_padded
+    dA_prev = dA_prev_padded[:, ph:ph+h_prev, pw:pw+w_prev, :]
 
     return dA_prev, dW, db
