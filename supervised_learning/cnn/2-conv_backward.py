@@ -43,9 +43,7 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
     m, h_prev, w_prev, c_prev = A_prev.shape
     _, h_new, w_new, _ = dZ.shape
 
-    dA_prev = np.zeros_like(A_prev)
     dW = np.zeros_like(W)
-
     db = np.sum(dZ, axis=(0, 1, 2), keepdims=True)
 
     if padding == 'same':
@@ -60,7 +58,7 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
     w_pos = (w_prev - kw + 2 * pw) // sw + 1
 
     A_prev_padded = np.pad(A_prev, ((0,), (ph,), (pw,), (0,)))
-    dA_prev = np.zeros_like(A_prev_padded)
+    dA_prev_padded = np.zeros_like(A_prev_padded)
 
     total_pos = h_pos * w_pos
 
@@ -72,7 +70,16 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
                                      j * sw: (j * sw) + kw, :]
             dZ_pixel = dZ[:, i, j, k][:, np.newaxis, np.newaxis, np.newaxis]
             dW[:, :, :, k] += np.sum(part_mat * dZ_pixel, axis=0)
-            dA_prev[:, i * sh: (i * sh) + kh,
-                    j * sw: (j * sw) + kw, :] += dZ_pixel * W[:, :, :, k]
+            dA_prev_padded[:, i * sh: (i * sh) + kh, j * sw:
+                           (j * sw) + kw, :] += dZ_pixel * W[:, :, :, k]
+
+    if ph > 0 and pw > 0:
+        dA_prev = dA_prev_padded[:, ph:-ph, pw:-pw, :]
+    elif ph > 0:
+        dA_prev = dA_prev_padded[:, ph:-ph, :, :]
+    elif pw > 0:
+        dA_prev = dA_prev_padded[:, :, pw:-pw, :]
+    else:
+        dA_prev = dA_prev_padded
 
     return dA_prev, dW, db
