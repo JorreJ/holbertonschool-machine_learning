@@ -31,28 +31,25 @@ def conv_forward(A_prev, W, b, activation, padding="same", stride=(1, 1)):
     sh, sw = stride
 
     if padding == 'same':
-        h_pos = int(np.ceil(h_prev / sh))
-        w_pos = int(np.ceil(w_prev / sw))
-
-        ph = max(0, (h_pos - 1) * sh + kh - h_prev) // 2 + 1
-        pw = max(0, (w_pos - 1) * sw + kw - w_prev) // 2 + 1
+        ph = ((h_prev - 1) * sh + kh - h_prev) // 2 + 1
+        pw = ((w_prev - 1) * sw + kw - w_prev) // 2 + 1
 
     elif padding == 'valid':
         ph = 0
         pw = 0
 
-    output_h = (h_prev - kh + 2 * ph) // sh + 1
-    output_w = (w_prev - kw + 2 * pw) // sw + 1
-    output_total = output_h * output_w
+    h_pos = (h_prev - kh + 2 * ph) // sh + 1
+    w_pos = (w_prev - kw + 2 * pw) // sw + 1
+    total_pos = h_pos * w_pos
 
     A_prev_padded = np.pad(A_prev, ((0,), (ph,), (pw,), (0,)))
 
-    Z = np.zeros((m, output_h, output_w, c_new))
+    Z = np.zeros((m, h_pos, w_pos, c_new))
 
-    for index in range(output_total):
+    for index in range(total_pos):
         for k in range(c_new):
-            i = index // output_h
-            j = index % output_w
+            i = index // h_pos
+            j = index % w_pos
 
             slice_A = A_prev_padded[:, i * sh: i * sh + kh,
                                     j * sw: j * sw + kw, :]
