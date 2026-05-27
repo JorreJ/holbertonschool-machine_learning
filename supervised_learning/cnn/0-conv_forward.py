@@ -31,8 +31,8 @@ def conv_forward(A_prev, W, b, activation, padding="same", stride=(1, 1)):
     sh, sw = stride
 
     if padding == 'same':
-        ph = ((h_prev - 1) * sh + kh - h_prev) // 2
-        pw = ((w_prev - 1) * sw + kw - w_prev) // 2
+        ph = ((h_prev - 1) * sh + kh - h_prev) // 2 + 1
+        pw = ((w_prev - 1) * sw + kw - w_prev) // 2 + 1
 
     elif padding == 'valid':
         ph = 0
@@ -48,7 +48,7 @@ def conv_forward(A_prev, W, b, activation, padding="same", stride=(1, 1)):
 
     for index in range(total_pos):
         for k in range(c_new):
-            i = index // h_pos
+            i = index // w_pos
             j = index % w_pos
 
             slice_A = A_prev_padded[:, i * sh: i * sh + kh,
