@@ -54,18 +54,15 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
         ph = 0
         pw = 0
 
-    h_pos = (h_prev - kh + 2 * ph) // sh + 1
-    w_pos = (w_prev - kw + 2 * pw) // sw + 1
-
     A_prev_padded = np.pad(A_prev, ((0,), (ph,), (pw,), (0,)))
     dA_prev_padded = np.zeros_like(A_prev_padded)
 
-    total_pos = h_pos * w_pos
+    total_pos = h_new * w_new
 
     for index in range(total_pos):
         for k in range(c_new):
-            i = index // w_pos
-            j = index % w_pos
+            i = index // w_new
+            j = index % w_new
             part_mat = A_prev_padded[:, i * sh: (i * sh) + kh,
                                      j * sw: (j * sw) + kw, :]
             dZ_pixel = dZ[:, i, j, k][:, np.newaxis, np.newaxis, np.newaxis]
