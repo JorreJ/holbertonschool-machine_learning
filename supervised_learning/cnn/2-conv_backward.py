@@ -49,8 +49,8 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
     db = np.sum(dZ, axis=(0, 1, 2), keepdims=True)
 
     if padding == 'same':
-        ph = ((h_prev - 1) * sh + kh - h_prev) // 2 + 1
-        pw = ((w_prev - 1) * sw + kw - w_prev) // 2 + 1
+        ph = ((h_prev - 1) * sh + kh - h_prev) // 2
+        pw = ((w_prev - 1) * sw + kw - w_prev) // 2
 
     elif padding == 'valid':
         ph = 0
@@ -68,8 +68,8 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
         for k in range(c_new):
             i = index // w_pos
             j = index % w_pos
-            part_mat = images_pad = A_prev_padded[:, i * sh: (i * sh) + kh,
-                                                  j * sw: (j * sw) + kw, :]
+            part_mat = A_prev_padded[:, i * sh: (i * sh) + kh,
+                                     j * sw: (j * sw) + kw, :]
             dZ_pixel = dZ[:, i, j, k][:, np.newaxis, np.newaxis, np.newaxis]
             dW[:, :, :, k] += np.sum(part_mat * dZ_pixel, axis=0)
             dA_prev[:, i * sh: (i * sh) + kh,
