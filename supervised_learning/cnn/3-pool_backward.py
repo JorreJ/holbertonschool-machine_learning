@@ -46,14 +46,16 @@ def pool_backward(dA, A_prev, kernel_shape, stride=(1, 1), mode='max'):
 
                 if mode == 'max':
                     slice_A = A_prev[ex, v_start:v_end, h_start:h_end, ch]
-                    
+
                     mask = (slice_A == np.max(slice_A))
-                    
-                    dA_prev[ex, v_start:v_end, h_start:h_end, ch] += mask * dA_pixel
+
+                    dA_prev[ex, v_start:v_end,
+                            h_start:h_end, ch] += mask * dA_pixel
 
                 elif mode == 'avg':
                     average_gradient = dA_pixel / (kh * kw)
-                    
-                    dA_prev[ex, v_start:v_end, h_start:h_end, ch] += average_gradient
+
+                    dA_prev[ex, v_start:v_end,
+                            h_start:h_end, ch] += average_gradient
 
     return dA_prev
