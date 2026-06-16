@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Module that defines the Yolo class for object detection."""
 
+import tensorflow.keras as K
+
 
 class Yolo:
     """Yolo class to perform object detection using the YOLOv3 algorithm."""
@@ -25,8 +27,9 @@ class Yolo:
             anchors (numpy.ndarray): A numpy.ndarray of shape (outputs,
                 anchor_boxes, 2) containing all of the anchor boxes.
         """
-        self.model = model_path
-        self.class_names = classes_path
+        self.model = K.models.load_model(model_path)
+        with open(classes_path, 'r') as f:
+            self.class_names = [line.strip() for line in f if line.strip()]
         self.class_t = class_t
         self.nms_t = nms_t
         self.anchors = anchors
