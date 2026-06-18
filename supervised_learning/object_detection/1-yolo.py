@@ -70,16 +70,16 @@ class Yolo:
             box_confidences.append(self._sigmoid(box_confidence))
             box_class_probs.append(self._sigmoid(classes_prob))
 
-            cy, cx = np.meshgrid(np.arange(output.shape[0]),
-                                 np.arange(output.shape[1]), indexing='ij')
+            cx, cy = np.meshgrid(np.arange(output.shape[1]),
+                                 np.arange(output.shape[0]))
             cx = cx.reshape(output.shape[0], output.shape[1], 1, 1)
             cy = cy.reshape(output.shape[0], output.shape[1], 1, 1)
 
             x_center = (activated_xy[:, :, :, 0:1] + cx) / output.shape[1]
             y_center = (activated_xy[:, :, :, 1:2] + cy) / output.shape[0]
 
-            input_w = self.model.input_shape[2]
-            input_h = self.model.input_shape[1]
+            input_w = self.model.inputs[0].shape[2]
+            input_h = self.model.inputs[0].shape[1]
 
             w = (np.exp(t_coords[:, :, :, 2:3]) *
                  self.anchors[i, :, 0].reshape((1, 1, -1, 1))) / input_w
