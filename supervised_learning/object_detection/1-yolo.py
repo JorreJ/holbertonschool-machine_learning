@@ -80,19 +80,28 @@ class Yolo:
                 (activated_xy[:, :, :, 1:2] + cy) / output.shape[0]
             ]
 
-            norm_wh = (np.exp(t_coords[:, :, :, 2:]) * self.anchors[i]) / \
-                image_size[::-1].reshape(1, 1, 1, 2)
+            grid_wh = np.array([output.shape[1],
+                                output.shape[0]]).reshape(1, 1, 1, 2)
+            norm_wh = (np.exp(t_coords[:, :, :, 2:])
+                       * self.anchors[i]) / grid_wh
 
             x_center, y_center = norm_xy[0], norm_xy[1]
             w, h = norm_wh[:, :, :, :1], norm_wh[:, :, :, 1:]
-            x1, x2 = x_center - (w / 2), x_center + (w / 2)
-            y1, y2 = y_center - (h / 2), y_center + (h / 2)
-            sized_x1 = x1 * image_size[1]
-            sized_x2 = x2 * image_size[1]
-            sized_y1 = y1 * image_size[0]
-            sized_y2 = y2 * image_size[0]
-            boxes.append(np.concatenate((sized_x1, sized_x2,
-                                         sized_y1, sized_y2), axis=-1))
+
+            # Étape 4 : Remise à l'échelle des pixels d'origine d'abord
+            scaled_x = x_center * image_size[1]
+            scaled_y = y_center * image_size[0]
+            scaled_w = w * image_size[1]
+            scaled_h = h * image_size[0]
+
+            # Étape 4 : Calcul des coins en pixels réels
+            x1 = scaled_x - (scaled_w / 2)
+            y1 = scaled_y - (scaled_h / 2)
+            x2 = scaled_x + (scaled_w / 2)
+            y2 = scaled_y + (scaled_h / 2)
+
+            # Enregistrement au format attendu [x1, y1, x2, y2]
+            boxes.append(np.concatenate((x1, y1, x2, y2), axis=-1))
 
         return boxes, box_confidences, box_class_probs
 
