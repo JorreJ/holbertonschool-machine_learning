@@ -78,10 +78,13 @@ class Yolo:
             x_center = (activated_xy[:, :, :, 0:1] + cx) / output.shape[1]
             y_center = (activated_xy[:, :, :, 1:2] + cy) / output.shape[0]
 
+            input_w = self.model.input_shape[2]
+            input_h = self.model.input_shape[1]
+
             w = (np.exp(t_coords[:, :, :, 2:3]) *
-                 self.anchors[i, :, 0]) / image_size[1]
-            h = (np.exp(t_coords[:, :, :, 3:]) *
-                 self.anchors[i, :, 1]) / image_size[0]
+                 self.anchors[i, :, 0].reshape((1, 1, -1, 1))) / input_w
+            h = (np.exp(t_coords[:, :, :, 3:4]) *
+                 self.anchors[i, :, 1].reshape((1, 1, -1, 1))) / input_h
 
             scaled_x = x_center * image_size[1]
             scaled_y = y_center * image_size[0]
