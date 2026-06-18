@@ -61,6 +61,9 @@ class Yolo:
         box_confidences = []
         box_class_probs = []
 
+        input_w = self.model.inputs[0].shape[1]
+        input_h = self.model.inputs[0].shape[2]
+
         for i, output in enumerate(outputs):
             t_coords = output[:, :, :, :4]
             box_confidence = output[:, :, :, 4:5]
@@ -77,9 +80,6 @@ class Yolo:
 
             x_center = (activated_xy[:, :, :, 0:1] + cx) / output.shape[1]
             y_center = (activated_xy[:, :, :, 1:2] + cy) / output.shape[0]
-
-            input_w = self.model.inputs[0].shape[2]
-            input_h = self.model.inputs[0].shape[1]
 
             w = (np.exp(t_coords[:, :, :, 2:3]) *
                  self.anchors[i, :, 0].reshape((1, 1, -1, 1))) / input_w
