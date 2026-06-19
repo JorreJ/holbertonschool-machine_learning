@@ -123,9 +123,9 @@ class Yolo:
                 - box_scores (list): A list of numpy.ndarrays of shape
                   (?,) containing the box score for each filtered box.
         """
-        filtered_boxes = []
-        box_classes = []
-        box_scores = []
+        max_boxes = []
+        classes = []
+        scores = []
 
         for i in range(len(boxes)):
             box_score = box_confidences[i] * box_class_probs[i]
@@ -133,9 +133,13 @@ class Yolo:
             score_max = np.max(box_score, axis=-1)
             mask = score_max >= self.class_t
 
-            filtered_boxes.append(boxes[i][mask])
-            box_classes.append(class_max[mask])
-            box_scores.append(score_max[mask])
+            max_boxes.append(boxes[i][mask])
+            classes.append(class_max[mask])
+            scores.append(score_max[mask])
+
+        filtered_boxes = np.concatenate(max_boxes, axis=0)
+        box_classes = np.concatenate(classes, axis=0)
+        box_scores = np.concatenate(scores, axis=0)
 
         return filtered_boxes, box_classes, box_scores
 
