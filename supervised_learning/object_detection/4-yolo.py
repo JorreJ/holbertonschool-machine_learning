@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Module that defines the Yolo class for object detection."""
 
-from os import listdir
+import os
 import cv2
 import numpy as np
 import tensorflow.keras as K
@@ -261,9 +261,13 @@ class Yolo:
         """
         images = []
         image_paths = []
-        for image in listdir(folder_path):
-            path = folder_path + image
-            image_paths.append(path)
-            images.append(cv2.imread(path))
+        for image in os.listdir(folder_path):
+            path = os.path.join(folder_path, image)
+
+            if os.path.isfile(path):
+                img = cv2.imread(path)
+                if img is not None:
+                    image_paths.append(path)
+                    images.append(img)
 
         return images, image_paths
