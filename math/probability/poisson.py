@@ -50,3 +50,22 @@ class Poisson:
             k_fact *= i
 
         return (lambtha_pow * exp) / k_fact
+
+    def cdf(self, k):
+        """Calculate the value of the CDF for a given number of successes.
+
+        Args:
+            k (int): The number of successes.
+
+        Returns:
+            float: The CDF value for k successes.
+        """
+        k = int(k)
+        if k < 0:
+            return 0
+
+        total_prob = 0.0
+        for i in range(k + 1):
+            total_prob += self.pmf(i)
+
+        return total_prob
