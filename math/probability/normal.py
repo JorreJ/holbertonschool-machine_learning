@@ -74,3 +74,29 @@ class Normal:
         square_root = (2 * pi) ** 0.5
 
         return (1 / (self.stddev * square_root)) * (e ** exp)
+
+    def cdf(self, x):
+        """Calculate the value of the CDF for a given x-value.
+
+        Args:
+            x (float): The x-value.
+
+        Returns:
+            float: The CDF value for x.
+        """
+        pi = 3.1415926536
+        z = self.z_score(x)
+
+        v = z / (2 ** 0.5)
+
+        block = (
+            v
+            - (v ** 3) / 3
+            + (v ** 5) / 10
+            - (v ** 7) / 42
+            + (v ** 9) / 216
+        )
+
+        erf_v = (2 / (pi ** 0.5)) * block
+
+        return 0.5 * (1 + erf_v)
