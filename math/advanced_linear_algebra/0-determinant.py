@@ -4,6 +4,23 @@
 import numpy as np
 
 
+def sub_matrix(matrix, row, column):
+    """Extract a sub-matrix by removing a specific row and column.
+
+    Args:
+        matrix (list of lists): The original matrix.
+        row (int): The index of the row to remove.
+        column (int): The index of the column to remove.
+
+    Returns:
+        list of lists: The resulting sub-matrix.
+    """
+    return [
+        [matrix[i][j] for j in range(len(matrix[i])) if j != column]
+        for i in range(len(matrix)) if i != row
+    ]
+
+
 def determinant(matrix):
     """Calculate the determinant of a square matrix.
 
@@ -15,7 +32,7 @@ def determinant(matrix):
         ValueError: If matrix is not a square matrix.
 
     Returns:
-        int: The determinant of the matrix.
+        int or float: The determinant of the matrix.
     """
     if (len(matrix) == 0 or not isinstance(matrix, list)
             or not all(isinstance(row, list) for row in matrix)):
@@ -24,4 +41,19 @@ def determinant(matrix):
         return 1
     if any(len(row) != len(matrix) for row in matrix):
         raise ValueError("matrix must be a square matrix")
-    return int(np.round(np.linalg.det(matrix)))
+    n = len(matrix)
+
+    if n == 1:
+        return matrix[0][0]
+
+    if n == 2:
+        return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
+
+    det = 0
+    for j in range(n):
+        sign = 1 if j % 2 == 0 else -1
+        coeff = matrix[0][j]
+        sub_mat = sub_matrix(matrix, 0, j)
+        det += sign * coeff * determinant(sub_mat)
+
+    return det
