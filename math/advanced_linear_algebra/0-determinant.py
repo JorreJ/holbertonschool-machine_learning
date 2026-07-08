@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Module that provides matrix operation functions."""
 
-import numpy as np
-
 
 def sub_matrix(matrix, row, column):
     """Extract a sub-matrix by removing a specific row and column.
