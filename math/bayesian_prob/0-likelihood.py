@@ -23,9 +23,9 @@ def likelihood(x, n, P):
         numpy.ndarray: A 1D array containing the likelihood for each
             probability in P.
     """
-    if n < 1 or not isinstance(n, int):
+    if not isinstance(n, int) or n < 1:
         raise ValueError('n must be a positive integer')
-    if x < 0 or not isinstance(x, int):
+    if not isinstance(x, int) or x < 0:
         raise ValueError('x must be an integer that is greater than'
                          ' or equal to 0')
     if x > n:
