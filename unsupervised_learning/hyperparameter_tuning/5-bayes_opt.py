@@ -85,7 +85,7 @@ class BayesianOptimization:
         for i in range(iterations):
             X_next, EI = self.acquisition()
 
-            if np.any(np.all(self.gp.X == X_next, axis=1)):
+            if np.isin(X_next, self.gp.X):
                 break
 
             Y_next = self.f(X_next)
@@ -96,5 +96,7 @@ class BayesianOptimization:
             idx = np.argmin(self.gp.Y)
         else:
             idx = np.argmax(self.gp.Y)
+
+        self.gp.X = self.gp.X[:-1, :]
 
         return self.gp.X[idx], self.gp.Y[idx]
