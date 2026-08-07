@@ -28,9 +28,9 @@ Two common techniques are:
 
 - **Standardization**
 
-\[
+$$
 x' = \frac{x - \mu}{\sigma}
-\]
+$$
 
 where:
 - \(\mu\) is the mean
@@ -38,9 +38,9 @@ where:
 
 - **Min-Max Scaling**
 
-\[
+$$
 x' = \frac{x - x_{min}}{x_{max}-x_{min}}
-\]
+$$
 
 which scales values between 0 and 1.
 
@@ -80,15 +80,15 @@ Instead of normalizing only the inputs, BatchNorm keeps intermediate activations
 
 The normalized activation is
 
-\[
+$$
 \hat{x}=\frac{x-\mu_B}{\sqrt{\sigma_B^2+\epsilon}}
-\]
+$$
 
 followed by
 
-\[
+$$
 y=\gamma\hat{x}+\beta
-\]
+$$
 
 where:
 
@@ -178,19 +178,19 @@ Momentum helps optimization continue moving in the same direction instead of osc
 
 Rather than updating parameters directly from the current gradient:
 
-\[
+$$
 W = W - \alpha dW
-\]
+$$
 
 Momentum introduces a velocity term:
 
-\[
+$$
 V = \beta V + (1-\beta)dW
-\]
+$$
 
-\[
+$$
 W = W - \alpha V
-\]
+$$
 
 where β is typically **0.9**.
 
@@ -223,15 +223,15 @@ RMSProp adapts the learning rate for every parameter individually.
 
 It keeps an exponentially weighted average of squared gradients.
 
-\[
+$$
 S=\beta S+(1-\beta)dW^2
-\]
+$$
 
 Then updates:
 
-\[
+$$
 W=W-\alpha\frac{dW}{\sqrt{S+\epsilon}}
-\]
+$$
 
 Large gradients receive smaller updates.
 
@@ -312,9 +312,9 @@ Learning rate decay gradually reduces the learning rate.
 
 For example,
 
-\[
+$$
 \alpha_t=\frac{\alpha_0}{1+\text{decay}\times t}
-\]
+$$
 
 where:
 
