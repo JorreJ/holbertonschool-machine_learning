@@ -258,8 +258,8 @@ Typical default values:
 
 ```
 Learning rate = 0.001
-$β1$ = 0.9
-$β2$ = 0.999
+β1 = 0.9
+β2 = 0.999
 ```
 
 ## Example
