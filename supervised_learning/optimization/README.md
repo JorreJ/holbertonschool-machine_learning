@@ -31,8 +31,8 @@ Two common techniques are:
 $x' = \frac{x - \mu}{\sigma}$
 
 where:
-- \(\mu\) is the mean
-- \(\sigma\) is the standard deviation
+- $\mu$ is the mean
+- $\sigma$ is the standard deviation
 
 - **Min-Max Scaling**
 
@@ -84,8 +84,8 @@ $y=\gamma\hat{x}+\beta$
 
 where:
 
-- γ is a learnable scaling parameter
-- β is a learnable offset
+- $γ$ is a learnable scaling parameter
+- $β$ is a learnable offset
 
 ## Example
 
@@ -178,7 +178,7 @@ $V = \beta V + (1-\beta)dW$
 
 $W = W - \alpha V$
 
-where β is typically **0.9**.
+where $β$ is typically **0.9**.
 
 ## Example
 
@@ -196,7 +196,7 @@ The optimizer behaves similarly.
 
 ## Disadvantages
 
-- Requires tuning β
+- Requires tuning $β$
 - Can overshoot if learning rate is too high
 
 ---
@@ -258,8 +258,8 @@ Typical default values:
 
 ```
 Learning rate = 0.001
-β1 = 0.9
-β2 = 0.999
+$β1$ = 0.9
+$β2$ = 0.999
 ```
 
 ## Example
@@ -298,8 +298,8 @@ $\alpha_t=\frac{\alpha_0}{1+\text{decay}\times t}$
 
 where:
 
-- α₀ is the initial learning rate
-- t is the iteration
+- $α₀$ is the initial learning rate
+- $t$ is the iteration
 
 ## Example
 
