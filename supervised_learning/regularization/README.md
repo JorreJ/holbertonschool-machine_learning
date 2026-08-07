@@ -44,9 +44,9 @@ $J = Loss + \lambda \sum |w_i|$
 
 where:
 
-- **Loss** is the original loss function.
-- **λ (lambda)** controls the strength of the penalty.
-- **w** represents the model's weights.
+- **$Loss$** is the original loss function.
+- **$λ$ (lambda)** controls the strength of the penalty.
+- **$w$** represents the model's weights.
 
 The optimizer tries to minimize both the prediction error and the magnitude of the weights.
 
@@ -67,7 +67,7 @@ This makes L1 useful for **feature selection**.
 ## Disadvantages
 
 - Can be unstable when features are highly correlated.
-- May remove useful features if λ is too large.
+- May remove useful features if $λ$ is too large.
 
 ---
 
