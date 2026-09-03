@@ -38,7 +38,7 @@ def bag_of_words(sentences, vocab=None):
     if features is None:
         features = np.unique(np.concatenate(words))
 
-    embeddings = np.zeros((len(sentences), len(features)))
+    embeddings = np.zeros((len(sentences), len(features)), dtype=int)
 
     feature_to_index = {word: i for i, word in enumerate(features)}
 
