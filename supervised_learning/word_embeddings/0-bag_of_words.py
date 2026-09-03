@@ -34,9 +34,10 @@ def bag_of_words(sentences, vocab=None):
 
     words = [sentence.split() for sentence in clean_sentences]
 
-    features = vocab
-    if features is None:
+    if vocab is None:
         features = np.unique(np.concatenate(words))
+    else:
+        features = np.array(vocab)
 
     embeddings = np.zeros((len(sentences), len(features)), dtype=int)
 
