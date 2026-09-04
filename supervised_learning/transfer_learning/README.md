@@ -424,7 +424,7 @@ The issue was therefore **not a failure of the trained model**, but a compatibil
 
 The objective of the experiment was to create a CIFAR-10 image classifier with at least **87% validation accuracy** using a pretrained Keras application.
 
-## 🏆 Final Performance
+## Final Performance
 
 | Metric | Result | Target | Status |
 |---|---:|---:|:---:|
