@@ -2,7 +2,7 @@
 
 > **Machine Learning Experiment — Transfer Learning & Image Classification**
 
-![ResNet architecture](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/ResNet-architecture.png)
+![Illustration of transfer learning](images/transfer_learning.png)
 
 
 ---
