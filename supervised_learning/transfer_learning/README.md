@@ -2,7 +2,7 @@
 
 > **Machine Learning Experiment — Transfer Learning & Image Classification**
 
-![Illustration of transfer learning](transfer_learning.png)
+![Illustration of transfer learning](transfer_learning.jpeg)
 
 
 ---
