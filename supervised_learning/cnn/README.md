@@ -2,7 +2,7 @@
 
 ![AlexNet architecture](https://upload.wikimedia.org/wikipedia/commons/1/1d/AlexNet_architecture.png)
 
-*AlexNet architecture — image by Daniel Voigt Godoy, licensed under CC BY 4.0.*
+*AlexNet architecture - image by Daniel Voigt Godoy, licensed under CC BY 4.0.*
 
 > **Paper:** Alex Krizhevsky, Ilya Sutskever, and Geoffrey E. Hinton,  
 > *ImageNet Classification with Deep Convolutional Neural Networks*, NIPS 2012.
@@ -88,9 +88,8 @@ For example, early layers could learn filters responding to simple patterns such
 
 One of the important design choices was the use of **Rectified Linear Units (ReLUs)**:
 
-\[
-f(x) = \max(0,x)
-\]
+
+$f(x) = \max(0,x)$
 
 Instead of using traditional saturating nonlinearities such as `tanh`, the researchers found that ReLUs allowed the network to train substantially faster.
 
