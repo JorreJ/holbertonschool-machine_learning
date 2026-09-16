@@ -2,7 +2,6 @@
 """Loads and tokenizes a Portuguese-to-English translation dataset."""
 
 from setup import load_pt2en
-import tensorflow as tf
 import transformers
 
 
@@ -16,8 +15,6 @@ class Dataset:
         self.tokenizer_pt, self.tokenizer_en = (
             self.tokenize_dataset(self.data_train)
         )
-        self.data_train = self.data_train.map(self.tf_encode)
-        self.data_valid = self.data_valid.map(self.tf_encode)
 
     def tokenize_dataset(self, data):
         """Train and return tokenizers for Portuguese and English data.
@@ -74,25 +71,4 @@ class Dataset:
         en_tokens = self.tokenizer_en.encode(en, add_special_tokens=False)
         en_tokens = [vocab_size_en] + en_tokens + [vocab_size_en + 1]
 
-        return pt_tokens, en_tokens
-
-    def tf_encode(self, pt, en):
-        """Wrap the encode method as a TensorFlow Python function.
-
-        Args:
-            pt (tf.Tensor): Tensor containing the Portuguese sentence.
-            en (tf.Tensor): Tensor containing the English sentence.
-
-        Returns:
-            tuple:
-                - pt_tokens (tf.Tensor): Tensor of integer tokens for
-                  the Portuguese sentence (dtype int64).
-                - en_tokens (tf.Tensor): Tensor of integer tokens for
-                  the English sentence (dtype int64).
-        """
-        pt_tokens, en_tokens = tf.py_function(
-            self.encode,
-            [pt, en],
-            [tf.int64, tf.int64]
-        )
         return pt_tokens, en_tokens
