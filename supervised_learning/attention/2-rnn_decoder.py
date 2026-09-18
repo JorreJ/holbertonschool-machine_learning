@@ -52,6 +52,6 @@ class RNNDecoder(tf.keras.layers.Layer):
         context = context[:, tf.newaxis, :]
         x = self.embedding(x)
         inputs = tf.concat([context, x], axis=2)
-        y, s = self.gru(inputs=inputs, initial_state=s_prev)
+        y, s = self.gru(inputs=inputs)
         y = self.F(tf.squeeze(y, axis=1))
         return y, s
