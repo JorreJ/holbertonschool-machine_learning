@@ -2,7 +2,6 @@
 """Module that calculates positional encoding for Transformers."""
 
 import numpy as np
-import tensorflow as tf
 
 
 def positional_encoding(max_seq_len, dm):
