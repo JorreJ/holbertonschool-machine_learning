@@ -5,7 +5,7 @@ import numpy as np
 
 
 def maximization(X, g):
-    """Calculate updated GMM parameters for the maximization step.
+    """Calculate the maximization step in the EM algorithm.
 
     Args:
         X (numpy.ndarray): 2D array of shape (n, d) containing the data set.
@@ -31,18 +31,15 @@ def maximization(X, g):
         or g.ndim != 2
         or g.shape[0] == 0
         or g.shape[1] != X.shape[0]
-        or not np.all(np.isfinite(X))
-        or not np.all(np.isfinite(g))
-        or np.any(g < 0)
     ):
         return None, None, None
     n, d = X.shape
     k = g.shape[0]
     N = np.sum(g, axis=1)
-    if np.any(N <= 0):
+    if np.any(N == 0):
         return None, None, None
     pi = N / n
-    m = g @ X / N[:, np.newaxis]
+    m = (g @ X) / N[:, np.newaxis]
     diff = X[np.newaxis, :, :] - m[:, np.newaxis, :]
     S = np.einsum('kn,kni,knj->kij', g, diff, diff)
     S = S / N[:, np.newaxis, np.newaxis]
