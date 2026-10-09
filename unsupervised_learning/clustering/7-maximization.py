@@ -1,48 +1,24 @@
 #!/usr/bin/env python3
-"""Maximization step of the EM algorithm for a GMM."""
 
 import numpy as np
 
 
 def maximization(X, g):
-    """Calculate the maximization step in the EM algorithm.
-
-    Args:
-        X (numpy.ndarray): 2D array of shape (n, d) containing the data set.
-        g (numpy.ndarray): 2D array of shape (k, n) containing the posterior
-            probabilities for each data point in each cluster.
-
-    Returns:
-        tuple:
-            - pi (numpy.ndarray): 1D array of shape (k,) containing the updated
-              priors for each cluster.
-            - m (numpy.ndarray): 2D array of shape (k, d) containing
-              the updated centroid means for each cluster.
-            - S (numpy.ndarray): 3D array of shape (k, d, d) containing the
-              updated covariance matrices for each cluster.
-            Returns (None, None, None) on failure.
-    """
-    if (
-        not isinstance(X, np.ndarray)
-        or X.ndim != 2
-        or X.shape[0] == 0
-        or X.shape[1] == 0
-        or not isinstance(g, np.ndarray)
-        or g.ndim != 2
-        or g.shape[0] == 0
-        or g.shape[1] != X.shape[0]
-        or not np.all(np.isfinite(X))
-        or not np.all(np.isfinite(g))
-    ):
+    if not isinstance(X, np.ndarray) or len(X.shape) != 2:
+        return None, None, None
+    if not isinstance(g, np.ndarray) or len(g.shape) != 2:
         return None, None, None
     n, d = X.shape
-    k = g.shape[0]
-    N = np.sum(g, axis=1)
-    if np.any(N == 0):
+    k, n_g = g.shape
+    if n != n_g:
         return None, None, None
-    pi = N / n
-    m = (g @ X) / N[:, np.newaxis]
-    diff = X[np.newaxis, :, :] - m[:, np.newaxis, :]
-    S = np.einsum('kn,kni,knj->kij', g, diff, diff)
-    S = S / N[:, np.newaxis, np.newaxis]
+    Nk = np.sum(g, axis=1)
+    if np.any(Nk <= 0):
+        return None, None, None
+    pi = Nk / n
+    m = np.matmul(g, X) / Nk[:, np.newaxis]
+    S = np.zeros((k, d, d))
+    for i in range(k):
+        diff = X - m[i]
+        S[i] = np.matmul((g[i, :, None] * diff).T, diff) / Nk[i]
     return pi, m, S
