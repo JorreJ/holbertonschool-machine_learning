@@ -17,6 +17,8 @@ def maximization(X, g):
     k, n_g = g.shape
     if n != n_g:
         return None, None, None
+    if not np.isclose(np.sum(g, axis=0), 1).all():
+        return None, None, None
     Nk = np.sum(g, axis=1)
     pi = Nk / n
     m = np.matmul(g, X) / Nk[:, np.newaxis]
