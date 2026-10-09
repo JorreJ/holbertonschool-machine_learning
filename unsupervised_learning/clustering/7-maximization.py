@@ -31,6 +31,7 @@ def maximization(X, g):
         or g.ndim != 2
         or g.shape[0] == 0
         or g.shape[1] != X.shape[0]
+        or np.any(g < 0)
     ):
         return None, None, None
     n, d = X.shape
