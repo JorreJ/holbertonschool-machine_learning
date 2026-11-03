@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Module that converts a numpy.ndarray into a pandas.DataFrame."""
 
-import string
-import numpy as np
 import pandas as pd
 
 
@@ -13,9 +11,8 @@ def from_numpy(array):
         array (numpy.ndarray): 2D array to convert into a DataFrame.
 
     Returns:
-        pandas.DataFrame: The newly created DataFrame with
-        uppercase alphabetical column names.
+        pandas.DataFrame: The newly created DataFrame with uppercase
+        alphabetical column names.
     """
-    df = pd.DataFrame(array)
-    df.columns = list(string.ascii_uppercase[:df.shape[1]])
-    return df
+    columns = [chr(i) for i in range(ord('A'), ord('A') + array.shape[1])]
+    return pd.DataFrame(array, columns=columns)
