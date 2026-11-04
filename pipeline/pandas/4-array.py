@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Extracts and converts specific DataFrame rows to a numpy array."""
 
-import pandas as pd
-
 
 def array(df):
     """Extract the last 10 rows of High and Close columns as a numpy array.
