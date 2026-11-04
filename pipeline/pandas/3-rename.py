@@ -16,6 +16,6 @@ def rename(df):
         and 'Close' columns.
     """
     df2 = df.rename(columns={'Timestamp': 'Datetime'})
-    df2['Datetime'] = pd.to_datetime(df2['Datetime'], unit='ms')
+    df2['Datetime'] = pd.to_datetime(df2['Datetime'], unit='s')
     df2 = df2[['Datetime', 'Close']]
     return df2
