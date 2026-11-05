@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Module that slices and filters specific columns of a pandas.DataFrame."""
 
-import pandas as pd
-
 
 def slice(df):
     """Slice a DataFrame to select specific columns and sample every 60th row.
