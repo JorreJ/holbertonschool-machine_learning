@@ -22,7 +22,7 @@ def agglomerative(X, dist):
         Z,
         color_threshold=dist
     )
-    plt.savefig("graph1")
+    plt.show()
     clss = scipy.cluster.hierarchy.fcluster(
         Z,
         t=dist,
