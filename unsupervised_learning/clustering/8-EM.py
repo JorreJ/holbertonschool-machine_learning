@@ -46,28 +46,28 @@ def expectation_maximization(X, k, iterations=1000,
     pi, m, S = initialize(X, k)
     if pi is None or m is None or S is None:
         return None, None, None, None, None
-    g, l = expectation(X, pi, m, S)  # noqa: E741
-    if g is None or l is None:
+    g, log = expectation(X, pi, m, S)
+    if g is None or log is None:
         return None, None, None, None, None
     if verbose:
-        print("Log Likelihood after 0 iterations: {:.5f}".format(l))
+        print("Log Likelihood after 0 iterations: {:.5f}".format(log))
     for i in range(1, iterations + 1):
         pi, m, S = maximization(X, g)
         if pi is None or m is None or S is None:
             return None, None, None, None, None
-        g, new_l = expectation(X, pi, m, S)
-        if g is None or new_l is None:
+        g, new_log = expectation(X, pi, m, S)
+        if g is None or new_log is None:
             return None, None, None, None, None
         if verbose and (i % 10 == 0 or i == iterations):
             print("Log Likelihood after {} iterations: {:.5f}".format(
-                i, new_l
+                i, new_log
             ))
-        if abs(new_l - l) <= tol:
+        if abs(new_log - log) <= tol:
             if verbose and i % 10 != 0 and i != iterations:
                 print("Log Likelihood after {} iterations: {:.5f}".format(
-                    i, new_l
+                    i, new_log
                 ))
-            l = new_l  # noqa: E741
+            log = new_log
             break
-        l = new_l  # noqa: E741
-    return pi, m, S, g, l
+        log = new_log
+    return pi, m, S, g, log
