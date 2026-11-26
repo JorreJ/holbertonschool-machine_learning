@@ -45,7 +45,7 @@ def BIC(X, kmin=1, kmax=None, iterations=1000,
     if kmax is None:
         kmax = n
     if (not isinstance(kmax, int) or kmax <= 0
-            or kmin > kmax or kmax > n):
+            or kmin >= kmax or kmax > n):
         return None, None, None, None
     log = np.zeros(kmax - kmin + 1)
     b = np.zeros(kmax - kmin + 1)
