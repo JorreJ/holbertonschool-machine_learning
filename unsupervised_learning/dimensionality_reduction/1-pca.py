@@ -17,10 +17,6 @@ def pca(X, ndim):
     """
     X_mean = np.mean(X, axis=0)
     X_centered = X - X_mean
-    covariance = np.cov(X_centered, rowvar=False)
-    eigenvalues, eigenvectors = np.linalg.eigh(covariance)
-    indices = np.argsort(eigenvalues)[::-1]
-    eigenvectors = eigenvectors[:, indices]
-    components = eigenvectors[:, :ndim]
-    X_reduced = X_centered @ components
-    return X_reduced
+    _, _, Vt = np.linalg.svd(X_centered)
+    W = Vt[:ndim].T
+    return X_centered @ W
