@@ -28,7 +28,7 @@ def BIC(X, kmin=1, kmax=None, iterations=1000,
             - best_k (int): Best value for k based on the lowest BIC.
             - best_result (tuple): Tuple of (pi, m, S) corresponding to the
               best model params.
-            - l (numpy.ndarray): 1D array containing the log likelihood for
+            - log (numpy.ndarray): 1D array containing the log likelihood for
               each cluster size.
             - b (numpy.ndarray): 1D array containing the BIC values for each
               cluster size.
@@ -47,7 +47,7 @@ def BIC(X, kmin=1, kmax=None, iterations=1000,
     if (not isinstance(kmax, int) or kmax <= 0
             or kmin > kmax or kmax > n):
         return None, None, None, None
-    l = np.zeros(kmax - kmin + 1)
+    log = np.zeros(kmax - kmin + 1)
     b = np.zeros(kmax - kmin + 1)
     best_k = None
     best_result = None
@@ -62,10 +62,10 @@ def BIC(X, kmin=1, kmax=None, iterations=1000,
             return None, None, None, None
         p = (k - 1) + k * d + k * d * (d + 1) // 2
         idx = k - kmin
-        l[idx] = log_likelihood
+        log[idx] = log_likelihood
         b[idx] = p * np.log(n) - 2 * log_likelihood
         if b[idx] < best_bic:
             best_bic = b[idx]
             best_k = k
             best_result = (pi, m, S)
-    return best_k, best_result, l, b
+    return best_k, best_result, log, b
