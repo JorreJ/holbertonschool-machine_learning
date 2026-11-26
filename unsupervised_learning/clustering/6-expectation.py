@@ -22,7 +22,7 @@ def expectation(X, pi, m, S):
         tuple:
             - g (numpy.ndarray): 2D array of shape (k, n) containing the
               posterior probabilities for each data point in each cluster.
-            - l (float): The total log likelihood of the model.
+            - log (float): The total log likelihood of the model.
             Returns (None, None) on failure.
     """
     if (
@@ -62,6 +62,6 @@ def expectation(X, pi, m, S):
     total = np.sum(g, axis=0)
     if np.any(total <= 0) or not np.all(np.isfinite(total)):
         return None, None
-    l = np.sum(np.log(total))
+    log = np.sum(np.log(total))
     g = g / total
-    return g, l
+    return g, log
