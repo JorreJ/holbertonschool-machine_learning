@@ -33,7 +33,7 @@ def expectation_maximization(X, k, iterations=1000,
               updated covariance matrices for each cluster.
             - g (numpy.ndarray): 2D array of shape (k, n) containing the
               posterior probabilities for each data point in each cluster.
-            - l (float): The total log likelihood of the model.
+            - log (float): The total log likelihood of the model.
             Returns (None, None, None, None, None) on failure.
     """
     if (not isinstance(X, np.ndarray) or X.ndim != 2
